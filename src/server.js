@@ -9,10 +9,11 @@ import Html from './Html';
 
 const app = express();
 
-// app.use('/assets', express.static('assets'));  // ??
+app.use('/assets', express.static('assets'));  // ??
 
 app.get('/', (req, res) => {
-  const appString = renderToString(<StaticRouter><App /></StaticRouter>);
+  const context = {};
+  const appString = renderToString(<StaticRouter context={context}><App /></StaticRouter>);
   res.send(Html({body: appString, title: 'i18nTest'}));
 });
 
