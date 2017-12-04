@@ -1,10 +1,10 @@
 import express from 'express';
-import languagesModel from '../models/languages';
+import dataKeysModel from '../models/datakeys';
 
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  languagesModel.find().then(languages => res.json({languages}));
+  dataKeysModel.find().then(dataKeys => res.json({dataKeys}));
 });
 
 export default router;

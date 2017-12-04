@@ -20,6 +20,7 @@ class HomePage extends Component {
         <h2>Home Page</h2>
         <Link to="/login" style={{ display: 'block', padding: 10 }}>Login</Link>
         <Link to="/test" style={{ display: 'block', padding: 10 }}>Test Page</Link>
+        <button>Test Button</button>
       </div>
     );
   }
