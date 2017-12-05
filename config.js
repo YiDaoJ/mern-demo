@@ -1,13 +1,16 @@
-const env = process.env;
+const merge = require('lodash/merge');
 
-export const nodeEnv = env.NODE_ENV || 'development';
+const url = `http://${process.env.HOST}:${process.env.PORT}`;
 
-export const logStars = function(message) {
-  console.info('**********');
-  console.info(message);
-  console.info('**********');
+const config = {
+  all: {
+    env: process.env.NODE_ENV || 'development',
+    apiEnv: process.env.API_ENV || 'local',
+    basename: process.env.PUBLIC_PATH,
+    host: process.env.HOST || 'localhost',
+    port: process.env.PORT || 8040,
+    apiUrl: `${url}/api`
+  }
 };
 
-export default {
-  port: env.PORT || 8080
-};
+module.exports = merge(config.all, config[config.all.env]);

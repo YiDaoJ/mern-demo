@@ -5,6 +5,7 @@ import { StaticRouter } from 'react-router';
 import bodyParser from 'body-parser';
 import Promise from 'bluebird';
 import mongoose from 'mongoose';
+import dotenv from 'dotenv';
 
 import apiRouter from './api';
 import config from '../config';
@@ -20,11 +21,13 @@ import dataValues from './api/routes/datavalues';
 // import projectModel from './api/models/projects';
 // import languageModel from './api/models/languages';
 
+dotenv.config();
+
 const app = express();
 
 app.use(bodyParser.json());
 mongoose.Promise = Promise;
-mongoose.connect('mongodb://localhost/i18n', { useMongoClient: true });
+mongoose.connect(process.env.DATABASE, { useMongoClient: true });
 
 app.use('/assets', express.static('assets'));  // ??
 app.use('/api', apiRouter);
@@ -38,6 +41,12 @@ app.get('*', (req, res) => {
   const appString = renderToString(<StaticRouter context={context}><App /></StaticRouter>);
   res.send(Html({body: appString, title: 'i18nTest'}));
 });
+
+
+app.listen(config.port, () => {
+  console.info('Express listening on port ', config.port);
+});
+
 
 // const lang = new languageModel({ code: 'en', name: 'English'});
 
@@ -57,7 +66,3 @@ app.get('*', (req, res) => {
 //   const datavalueItem = new dataValueModel({ value: 'save', key: datakeyItem._id, language: lang._id, project: proj._id });
 //   datavalueItem.save(err => { if(err) console.log(err);});  
 // });
-
-app.listen(config.port, () => {
-  console.info('Express listening on port ', config.port);
-});
