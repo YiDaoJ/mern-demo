@@ -27,7 +27,7 @@ const app = express();
 
 app.use(bodyParser.json());
 mongoose.Promise = Promise;
-mongoose.connect(process.env.DATABASE, { useMongoClient: true });
+mongoose.connect(process.env.DATA, { useMongoClient: true });
 
 app.use('/assets', express.static('assets'));  // ??
 app.use('/api', apiRouter);
@@ -42,6 +42,25 @@ app.get('*', (req, res) => {
   res.send(Html({body: appString, title: 'i18nTest'}));
 });
 
+
+// const lang = new languageModel({ _id: 'en', name: 'English'});
+
+// lang.save(err => {
+//   if(err)
+//     console.log(err);
+
+//   const datakeyItem = new dataKeyModel({ _id: 'GLOBAL__BTN_SAVE' });
+//   datakeyItem.save(err => { if(err) console.log(err);});  
+
+//   const datavalueItem = new dataValueModel({ value: 'Save', key: datakeyItem._id, language: lang._id, project: ''});
+//   datavalueItem.save(err => { if(err) console.log(err);});  
+
+//   const proj = new projectModel({ _id: 'TestProject', languages: [lang._id], data:{ datakeys: [datakeyItem._id], datavalues: [datavalueItem._id] } });
+//   proj.save(err => {
+//     if(err)
+//       console.log(err);
+//   });  
+// });
 
 app.listen(config.port, () => {
   console.info('Express listening on port ', config.port);

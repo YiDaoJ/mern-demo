@@ -11,14 +11,14 @@ router.get('/', (req, res) => {
 
 router.get('/:title', (req, res) => {
   projectsModel
-    .findOne({ title: req.params.title })
+    .findOne({ _id: req.params.title })
     .then(project => res.json({project}));
 });
 
 router.get('/:title/languages', (req, res) => {
   projectsModel
-    .findOne({title: req.params.title})
-    .populate('languages', 'name')  // returns name only
+    .findOne({ _id: req.params.title })
+    .populate('languages', 'name')  // returns name only , _id default
     .exec((err, project) => {
       if(err) {
         console.log(err);
@@ -31,8 +31,8 @@ router.get('/:title/languages', (req, res) => {
 // get the datakeys in project
 router.get('/:title/datakeys', (req, res) => {
   projectsModel
-    .findOne({title: req.params.title})
-    .populate('data.datakeys', 'name')
+    .findOne({ _id: req.params.title })
+    .populate('data.datakeys')
     .exec((err, project) => {
       if(err) {
         console.log(err);
@@ -45,8 +45,8 @@ router.get('/:title/datakeys', (req, res) => {
 
 router.get('/:title/datavalues', (req, res) => {
   projectsModel
-    .findOne({title: req.params.title})
-    .populate('data.datavalues', 'value')
+    .findOne({ _id: req.params.title })
+    .populate('data.datavalues')
     .exec((err, project) => {
       if(err) {
         console.log(err);
